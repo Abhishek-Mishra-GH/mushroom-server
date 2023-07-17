@@ -14,11 +14,17 @@ const io = require('socket.io')(server, {
 
 
 io.on('connection', (socket) => {
-  console.log(socket.id);
+
+  
+
+  socket.on('new-user', (data) => {
+    let bcMsg = {...data, msg: "Connected!"};
+    socket.broadcast.emit('new-user', bcMsg);
+  });
+
   socket.on('send-msg', (data) => {
-    console.log(data);
     socket.broadcast.emit('bc', data);
-  })
+  });
 })
 
 
